@@ -8,14 +8,14 @@
 [h2] 2. 功能 [/h2]
 [list]
     [*] 在地图界面显示全览小地图
-    [img]https://images.steamusercontent.com/ugc/10453256321932357138/8B20814E4BB31E1B1E1D39E2CD806B7A72D2D3CA/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
+    [img]https://images.steamusercontent.com/ugc/11410528413005793209/B98D477F41F68E87D918B550D39BD2855F444429/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
     [*] 设置界面可以调整小地图的位置
-    [img]https://images.steamusercontent.com/ugc/17878268037868162019/F7FBC6396C8559F6FC090812E6BC6B5C58D32339/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
+    [img]https://images.steamusercontent.com/ugc/18158166993913239618/37EA2424F32DE0DCC7050515DCB7707A07C87554/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
 [/list]
 
 [h2] 3. 提醒 [/h2]
 [list]
-    [*] 由于游戏机制，首次打任何一个 MOD 都会导致存档不同步，可以使用 [url=https://steamcommunity.com/sharedfiles/filedetails/changelog/3747539544] BetterSaveSlot [/url] 解决
+    [*] 由于游戏机制，首次打任何一个 MOD 都会导致存档不同步，可以使用 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747533700] BetterSaveSlots [/url] 解决
     [*] 本 MOD 需要前置：  
 • [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3747526103] JmcModLib [/url]  
     [*] 本 MOD 的本地化内容（包括主页与更新日志）除了中文外均为ChatGPT生成，目前支持游戏官方支持的所有语种，如果你认为哪个词翻译不妥或者希望贡献你的翻译，欢迎去Github提issue / PR，或者联系我本人
@@ -30,7 +30,7 @@
 - 
 
 [h2] 6. 其他 [/h2]
-有意见和建议欢迎大家在讨论区留言或者github提issue，更新日志可以点击右上角“[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/3747533700] 改动说明 [/url]”查看。
+有意见和建议欢迎大家在讨论区留言或者github提issue，更新日志可以点击右上角“[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/3747539220] 改动说明 [/url]”查看。
 
 [b] 如果你喜欢这个 Mod 的话，希望可以点一下好评~[/b]
 
