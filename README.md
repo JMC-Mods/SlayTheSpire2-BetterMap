@@ -2,15 +2,15 @@
   <a href="README.md"><img alt="中文" src=".github/badges/language-zh.svg"></a>
   <a href="README_en.md"><img alt="English" src=".github/badges/language-en.svg"></a>
   <a href="CHANGELOG.md"><img alt="更新日志" src=".github/badges/changelog-zh.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/releases"><img alt="Releases" src=".github/badges/releases.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/releases"><img alt="Releases" src=".github/badges/releases.svg"></a>
 <!-- code-stats:start -->
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="C# 行数" src=".github/badges/code-lines-csharp.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="MSBuild script 行数" src=".github/badges/code-lines-msbuild-script.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="JSON 行数" src=".github/badges/code-lines-json.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="YAML 行数" src=".github/badges/code-lines-yaml.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="总代码行数" src=".github/badges/code-lines-total.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="累计新增行数" src=".github/badges/code-lines-added.svg"></a>
-  <a href="https://github.com/JMC2002/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="累计删除行数" src=".github/badges/code-lines-deleted.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="C# 行数" src=".github/badges/code-lines-csharp.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="MSBuild script 行数" src=".github/badges/code-lines-msbuild-script.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="JSON 行数" src=".github/badges/code-lines-json.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="YAML 行数" src=".github/badges/code-lines-yaml.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="总代码行数" src=".github/badges/code-lines-total.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="累计新增行数" src=".github/badges/code-lines-added.svg"></a>
+  <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="累计删除行数" src=".github/badges/code-lines-deleted.svg"></a>
 <!-- code-stats:end -->
 </p>
 
@@ -20,11 +20,11 @@
 ### Mod本体安装
 Steam版本直接在创意工坊订阅即可（暂未开放）
 
-其他版本可以自行编译，或者在[📦 Releases](https://github.com/JMC2002/SlayTheSpire2-BetterMap/releases)界面下载.zip后解压到游戏安装目录下的Mods
+其他版本可以自行编译，或者在[📦 Releases](https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/releases)界面下载.zip后解压到游戏安装目录下的Mods
 目录下（没有就新建一个）
 
 ### 前置安装
-**此外，本模组强依赖于模组[JmcModLib](https://github.com/JMC2002/JmcModLib_STS2/releases)**，安装方法同上
+**此外，本模组强依赖于模组[JmcModLib](https://github.com/JMC-Mods/SlayTheSpire2_JmcModLib/releases)**，安装方法同上
 
 安装完成后的目录结构如下：
 
@@ -50,7 +50,7 @@ Steam版本直接在创意工坊订阅即可（暂未开放）
 
 [演示视频（B站）](https://www.bilibili.com/video/BV14ScUzTEo2)
 
-[Github仓库](https://github.com/JMC2002/SlayTheSpire2-BetterMap)
+[Github仓库](https://github.com/JMC-Mods/SlayTheSpire2-BetterMap)
 ## ⚙️ 2. 功能
 - 在地图界面显示全览小地图
 ![效果演示](./pic/主图.png)
@@ -59,7 +59,7 @@ Steam版本直接在创意工坊订阅即可（暂未开放）
 ![设置](./pic/设置演示.png)
  
 ## 🔔 3. 提醒
-- **本模组强依赖于模组[JmcModLib](https://github.com/JMC2002/JmcModLib_STS2/releases)**
+- **本模组强依赖于模组[JmcModLib](https://github.com/JMC-Mods/SlayTheSpire2_JmcModLib/releases)**
  
 ## 🧩 4. 兼容性
 - 由于游戏处于EA阶段，可能会随着游戏版本更新而失效

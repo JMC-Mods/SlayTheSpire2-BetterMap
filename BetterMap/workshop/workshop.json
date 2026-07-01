@@ -1,0 +1,12 @@
+{
+  "title": "BetterMap",
+  "description": "一个小地图，有BUG反馈B站JMC丶或Github，二次分发时必须标注来源",
+  "visibility": "public",
+  "changeNote": "适配正式MOD发布的格式迁移。",
+  "tags": [
+    "QoL"
+  ],
+  "dependencies": [
+    3747526103
+  ]
+}
