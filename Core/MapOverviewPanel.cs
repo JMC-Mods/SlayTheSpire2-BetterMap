@@ -49,6 +49,7 @@ public partial class MapOverviewPanel : Control
     private const float PointBoundsPadX = 80f;
     private const float PointBoundsPadTop = 120f;
     private const float PointBoundsPadBottom = 260f;
+    private const float DrawingInputPositionToleranceSquared = 100f;
 
     // Timer 刷新频率
     private const double SyncInterval = 1d / 144;
@@ -177,6 +178,7 @@ public partial class MapOverviewPanel : Control
 
         EnableMinimapVisibility();
         StartTrackingMapDrawings();
+        MinimapDrawingRedirector.Register(this);
 
         _syncTimer.Start();
     }
@@ -237,6 +239,7 @@ public partial class MapOverviewPanel : Control
     private void TeardownCanvas()
     {
         if (_syncTimer != null) _syncTimer.Stop();
+        MinimapDrawingRedirector.Unregister(this);
         StopTrackingMapDrawings();
 
         if (_svRid.IsValid && _mapCanvasRid.IsValid)
@@ -349,6 +352,47 @@ public partial class MapOverviewPanel : Control
         if (!Visible || node == null || !GodotObject.IsInstanceValid(node)) return;
 
         SetVisibilityRecursive(node, MinimapLayerBit, true);
+    }
+
+    internal bool TryProjectDrawingPosition(NMapDrawings drawings, Vector2 originalDrawingsPosition, out Vector2 projectedDrawingsPosition)
+    {
+        projectedDrawingsPosition = originalDrawingsPosition;
+        if (!Visible || !_canvasReady) return false;
+        if (_mapScreen == null || _mapContainer == null || _svc == null || _sv == null) return false;
+        if (!GodotObject.IsInstanceValid(_mapScreen) || !GodotObject.IsInstanceValid(_mapContainer)) return false;
+        if (drawings == null || !GodotObject.IsInstanceValid(drawings)) return false;
+        if (!IsCurrentMapDrawings(drawings)) return false;
+        if (_scale <= 0f) return false;
+
+        var sourceScreenPosition = drawings.GetGlobalTransform() * originalDrawingsPosition;
+        if (sourceScreenPosition.DistanceSquaredTo(GetGlobalMousePosition()) > DrawingInputPositionToleranceSquared) return false;
+
+        var minimapPosition = _svc.GetGlobalTransform().AffineInverse() * sourceScreenPosition;
+        if (minimapPosition.X < 0f || minimapPosition.Y < 0f || minimapPosition.X > _svc.Size.X || minimapPosition.Y > _svc.Size.Y) return false;
+
+        var svSize = new Vector2(_sv.Size.X, _sv.Size.Y);
+        var mapRange = _worldMax - _worldMin;
+        if (mapRange.X < 1f || mapRange.Y < 1f) return false;
+
+        // 反解 ForceSyncTransform 中设置给小地图 SubViewport 的 Canvas 变换。
+        var canvasOffset = new Vector2(
+            (svSize.X - mapRange.X * _scale) * 0.5f,
+            (svSize.Y - mapRange.Y * _scale) * 0.5f);
+        var mapCanvasPosition = (minimapPosition - canvasOffset) / _scale + _mapContainer.GlobalPosition + _worldMin;
+        projectedDrawingsPosition = drawings.GetGlobalTransform().AffineInverse() * mapCanvasPosition;
+        return true;
+    }
+
+    private bool IsCurrentMapDrawings(NMapDrawings drawings)
+    {
+        try
+        {
+            return _mapScreen.Drawings.GetInstanceId() == drawings.GetInstanceId();
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     // =========================================================================
