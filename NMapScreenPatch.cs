@@ -103,6 +103,25 @@ public static class NMapScreenPatch
         }
     }
 
+    [HarmonyPatch(nameof(NMapScreen._Input))]
+    [HarmonyPrefix]
+    public static bool Input_Prefix(NMapScreen __instance, InputEvent inputEvent)
+    {
+        try
+        {
+            if (IsPanelForScreen(_panel, __instance) && _panel!.TryHandleMinimapDrawingInput(inputEvent))
+            {
+                return false;
+            }
+        }
+        catch (System.Exception ex)
+        {
+            ModLogger.Warn($"处理小地图涂鸦输入时发生异常: {ex.Message}");
+        }
+
+        return true;
+    }
+
     // Close 后隐藏面板
     [HarmonyPatch(nameof(NMapScreen.Close))]
     [HarmonyPostfix]

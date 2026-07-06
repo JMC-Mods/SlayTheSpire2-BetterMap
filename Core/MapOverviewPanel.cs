@@ -49,7 +49,6 @@ public partial class MapOverviewPanel : Control
     private const float PointBoundsPadX = 80f;
     private const float PointBoundsPadTop = 120f;
     private const float PointBoundsPadBottom = 260f;
-    private const float DrawingInputPositionToleranceSquared = 100f;
 
     // Timer 刷新频率
     private const double SyncInterval = 1d / 144;
@@ -63,6 +62,7 @@ public partial class MapOverviewPanel : Control
     private SubViewportContainer _svc;
     private SubViewport _sv;
     private ColorRect _viewportIndicator;
+    private MinimapDrawingInputLayer _drawingInputLayer;
     private Godot.Timer _syncTimer;
     private bool _built;
 
@@ -130,6 +130,14 @@ public partial class MapOverviewPanel : Control
         };
         _svc.AddChild(_viewportIndicator);
 
+        _drawingInputLayer = new MinimapDrawingInputLayer
+        {
+            Name = "DrawingInputLayer",
+            MouseFilter = MouseFilterEnum.Ignore,
+        };
+        _drawingInputLayer.Configure(this);
+        _svc.AddChild(_drawingInputLayer);
+
         _syncTimer = new Godot.Timer
         {
             Name = "MapSyncTimer",
@@ -178,7 +186,6 @@ public partial class MapOverviewPanel : Control
 
         EnableMinimapVisibility();
         StartTrackingMapDrawings();
-        MinimapDrawingRedirector.Register(this);
 
         _syncTimer.Start();
     }
@@ -239,7 +246,7 @@ public partial class MapOverviewPanel : Control
     private void TeardownCanvas()
     {
         if (_syncTimer != null) _syncTimer.Stop();
-        MinimapDrawingRedirector.Unregister(this);
+        _drawingInputLayer?.CancelDrawing();
         StopTrackingMapDrawings();
 
         if (_svRid.IsValid && _mapCanvasRid.IsValid)
@@ -354,20 +361,21 @@ public partial class MapOverviewPanel : Control
         SetVisibilityRecursive(node, MinimapLayerBit, true);
     }
 
-    internal bool TryProjectDrawingPosition(NMapDrawings drawings, Vector2 originalDrawingsPosition, out Vector2 projectedDrawingsPosition)
+    internal bool TryGetDrawingPositionFromScreenPosition(Vector2 screenPosition, out NMapDrawings? drawings, out Vector2 drawingsPosition)
     {
-        projectedDrawingsPosition = originalDrawingsPosition;
+        drawings = null;
+        drawingsPosition = Vector2.Zero;
         if (!Visible || !_canvasReady) return false;
         if (_mapScreen == null || _mapContainer == null || _svc == null || _sv == null) return false;
         if (!GodotObject.IsInstanceValid(_mapScreen) || !GodotObject.IsInstanceValid(_mapContainer)) return false;
-        if (drawings == null || !GodotObject.IsInstanceValid(drawings)) return false;
-        if (!IsCurrentMapDrawings(drawings)) return false;
         if (_scale <= 0f) return false;
 
-        var sourceScreenPosition = drawings.GetGlobalTransform() * originalDrawingsPosition;
-        if (sourceScreenPosition.DistanceSquaredTo(GetGlobalMousePosition()) > DrawingInputPositionToleranceSquared) return false;
+        try { drawings = _mapScreen.Drawings; }
+        catch { return false; }
 
-        var minimapPosition = _svc.GetGlobalTransform().AffineInverse() * sourceScreenPosition;
+        if (drawings == null || !GodotObject.IsInstanceValid(drawings)) return false;
+
+        var minimapPosition = _svc.GetGlobalTransform().AffineInverse() * screenPosition;
         if (minimapPosition.X < 0f || minimapPosition.Y < 0f || minimapPosition.X > _svc.Size.X || minimapPosition.Y > _svc.Size.Y) return false;
 
         var svSize = new Vector2(_sv.Size.X, _sv.Size.Y);
@@ -379,20 +387,23 @@ public partial class MapOverviewPanel : Control
             (svSize.X - mapRange.X * _scale) * 0.5f,
             (svSize.Y - mapRange.Y * _scale) * 0.5f);
         var mapCanvasPosition = (minimapPosition - canvasOffset) / _scale + _mapContainer.GlobalPosition + _worldMin;
-        projectedDrawingsPosition = drawings.GetGlobalTransform().AffineInverse() * mapCanvasPosition;
+        drawingsPosition = drawings.GetGlobalTransform().AffineInverse() * mapCanvasPosition;
         return true;
     }
 
-    private bool IsCurrentMapDrawings(NMapDrawings drawings)
+    internal bool TryHandleMinimapDrawingInput(InputEvent @event)
     {
-        try
-        {
-            return _mapScreen.Drawings.GetInstanceId() == drawings.GetInstanceId();
-        }
-        catch
-        {
-            return false;
-        }
+        return Visible
+            && _drawingInputLayer != null
+            && GodotObject.IsInstanceValid(_drawingInputLayer)
+            && _drawingInputLayer.TryHandleInput(@event);
+    }
+
+    internal static bool TryHandleActiveMinimapDrawingInput(InputEvent @event)
+    {
+        return ActivePanel != null
+            && GodotObject.IsInstanceValid(ActivePanel)
+            && ActivePanel.TryHandleMinimapDrawingInput(@event);
     }
 
     // =========================================================================
@@ -458,6 +469,7 @@ public partial class MapOverviewPanel : Control
         _svc.Position = new Vector2(innerPad, innerPad);
         _svc.Size = new Vector2(innerW, innerH);
         _sv.Size = (Vector2I)_svc.Size;
+        _drawingInputLayer.Size = _svc.Size;
         _scale = Mathf.Min(innerW / mapRange.X, innerH / mapRange.Y);
     }
 
