@@ -75,6 +75,8 @@ public partial class MapOverviewPanel : Control
     private bool _canvasReady;
     private float _scale;
     private Vector2 _lastMapPosition = new(float.NaN, float.NaN);
+    private NMapDrawings? _mapDrawings;
+    private bool _isTrackingMapDrawings;
 
     private static readonly FieldInfo DictField =
         typeof(NMapScreen).GetField("_mapPointDictionary",
@@ -174,6 +176,7 @@ public partial class MapOverviewPanel : Control
         SetupCanvas();
 
         EnableMinimapVisibility();
+        StartTrackingMapDrawings();
 
         _syncTimer.Start();
     }
@@ -234,6 +237,7 @@ public partial class MapOverviewPanel : Control
     private void TeardownCanvas()
     {
         if (_syncTimer != null) _syncTimer.Stop();
+        StopTrackingMapDrawings();
 
         if (_svRid.IsValid && _mapCanvasRid.IsValid)
         {
@@ -292,6 +296,59 @@ public partial class MapOverviewPanel : Control
         {
             SetVisibilityRecursive(node.GetChild(i), bitMask, enable);
         }
+    }
+
+    private void StartTrackingMapDrawings()
+    {
+        if (_mapScreen == null || !GodotObject.IsInstanceValid(_mapScreen)) return;
+
+        NMapDrawings? drawings;
+        try { drawings = _mapScreen.Drawings; }
+        catch { return; }
+
+        if (drawings == null || !GodotObject.IsInstanceValid(drawings)) return;
+        if (_isTrackingMapDrawings && ReferenceEquals(_mapDrawings, drawings)) return;
+
+        StopTrackingMapDrawings();
+        _mapDrawings = drawings;
+
+        try
+        {
+            _mapDrawings.Connect(Node.SignalName.ChildEnteredTree, Callable.From<Node>(OnMapDrawingNodeEnteredTree));
+            _isTrackingMapDrawings = true;
+        }
+        catch (System.Exception ex)
+        {
+            _mapDrawings = null;
+            ModLogger.Warn($"监听地图涂鸦节点创建失败: {ex.Message}");
+        }
+    }
+
+    private void StopTrackingMapDrawings()
+    {
+        if (!_isTrackingMapDrawings) return;
+
+        try
+        {
+            if (_mapDrawings != null && GodotObject.IsInstanceValid(_mapDrawings))
+            {
+                _mapDrawings.Disconnect(Node.SignalName.ChildEnteredTree, Callable.From<Node>(OnMapDrawingNodeEnteredTree));
+            }
+        }
+        catch (System.Exception ex)
+        {
+            ModLogger.Debug($"停止监听地图涂鸦节点创建时发生异常: {ex.Message}");
+        }
+
+        _mapDrawings = null;
+        _isTrackingMapDrawings = false;
+    }
+
+    private void OnMapDrawingNodeEnteredTree(Node node)
+    {
+        if (!Visible || node == null || !GodotObject.IsInstanceValid(node)) return;
+
+        SetVisibilityRecursive(node, MinimapLayerBit, true);
     }
 
     // =========================================================================
