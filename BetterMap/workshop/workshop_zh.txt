@@ -14,6 +14,7 @@
     [img]https://images.steamusercontent.com/ugc/11410528413005793209/B98D477F41F68E87D918B550D39BD2855F444429/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
     [*] 设置界面可以调整小地图的位置
     [img]https://images.steamusercontent.com/ugc/18158166993913239618/37EA2424F32DE0DCC7050515DCB7707A07C87554/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
+    [*] 可以直接在小地图上涂鸦
 [/list]
 
 [h2] 3. 提醒 [/h2]

@@ -2,6 +2,7 @@
   <a href="README.md"><img alt="中文" src=".github/badges/language-zh.svg"></a>
   <a href="README_en.md"><img alt="English" src=".github/badges/language-en.svg"></a>
   <a href="CHANGELOG.md"><img alt="更新日志" src=".github/badges/changelog-zh.svg"></a>
+  <a href="CHANGELOG_en.md"><img alt="Changelog" src=".github/badges/changelog-en.svg"></a>
   <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/releases"><img alt="Releases" src=".github/badges/releases.svg"></a>
 <!-- code-stats:start -->
   <a href="https://github.com/JMC-Mods/SlayTheSpire2-BetterMap/actions/workflows/code-lines.yml"><img alt="C# 行数" src=".github/badges/code-lines-csharp.svg"></a>
@@ -57,6 +58,8 @@ Steam版本直接在创意工坊订阅即可（暂未开放）
 
 - 设置界面可以调整小地图的位置
 ![设置](./pic/设置演示.png)
+
+- 可以直接在小地图上涂鸦
  
 ## 🔔 3. 提醒
 - **本模组强依赖于模组[JmcModLib](https://github.com/JMC-Mods/SlayTheSpire2_JmcModLib/releases)**

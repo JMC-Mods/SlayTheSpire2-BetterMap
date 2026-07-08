@@ -14,6 +14,7 @@ Places a minimap on the left side of the map screen to show an overview of the e
     [img]https://images.steamusercontent.com/ugc/11410528413005793209/B98D477F41F68E87D918B550D39BD2855F444429/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
     [*] The minimap position can be adjusted in the settings screen
     [img]https://images.steamusercontent.com/ugc/18158166993913239618/37EA2424F32DE0DCC7050515DCB7707A07C87554/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
+    [*] You can draw directly on the minimap
 [/list]
 
 [h2] 3. Notes [/h2]
